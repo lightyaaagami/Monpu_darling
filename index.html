@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Monpu Love 💖</title>
+<title>Monpu Love ❤️</title>
 
 <style>
 *{
@@ -16,15 +16,15 @@ body{
 height:100vh;
 overflow:hidden;
 background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+color:white;
 display:flex;
 justify-content:center;
 align-items:center;
-color:white;
 text-align:center;
 }
 
-/* Screens */
-.screen{
+/* Pages */
+.page{
 position:absolute;
 width:100%;
 height:100%;
@@ -33,6 +33,7 @@ flex-direction:column;
 justify-content:center;
 align-items:center;
 transition:opacity 1s ease;
+padding:20px;
 }
 
 .hidden{
@@ -42,12 +43,14 @@ pointer-events:none;
 
 /* Buttons */
 button{
-padding:12px 30px;
-margin:15px;
+padding:12px 28px;
+margin-top:20px;
 border:none;
 border-radius:30px;
-cursor:pointer;
+background:white;
+color:#ff4e8d;
 font-size:16px;
+cursor:pointer;
 transition:0.3s;
 }
 
@@ -55,42 +58,13 @@ button:hover{
 transform:scale(1.1);
 }
 
-.primary{
-background:white;
-color:#ff4e8d;
-}
-
-.secondary{
-background:#ff4e8d;
-color:white;
-}
-
-/* Typewriter */
-.typewriter{
-font-size:32px;
-white-space:nowrap;
-overflow:hidden;
-border-right:3px solid white;
-width:0;
-animation:typing 3s steps(20,end) forwards, blink .7s infinite;
-}
-
-@keyframes typing{
-from{width:0}
-to{width:100%}
-}
-
-@keyframes blink{
-50%{border-color:transparent}
-}
-
-/* Kiss */
+/* Kiss animation */
 .kiss{
-font-size:60px;
-animation:kissAnim 1s infinite alternate;
+font-size:80px;
+animation:pulse 1s infinite alternate;
 }
 
-@keyframes kissAnim{
+@keyframes pulse{
 from{transform:scale(1);}
 to{transform:scale(1.2);}
 }
@@ -98,8 +72,8 @@ to{transform:scale(1.2);}
 /* Floating hearts */
 .heart{
 position:absolute;
-font-size:24px;
-animation:float 5s linear infinite;
+font-size:22px;
+animation:float 6s linear infinite;
 }
 
 @keyframes float{
@@ -131,100 +105,101 @@ animation:boom 1s ease-out forwards;
 100%{opacity:0;transform:scale(3);}
 }
 
-/* Blur */
-.blur{
-backdrop-filter:blur(8px);
-background:rgba(0,0,0,0.3);
-position:absolute;
-inset:0;
-opacity:0;
-transition:opacity 1s;
-z-index:-1;
-}
-
-.show-blur{
-opacity:1;
-}
-
-/* Images */
 img{
-max-width:200px;
+max-width:220px;
 margin:20px;
 }
 
 .message{
 margin-top:20px;
-font-size:22px;
-min-height:40px;
+font-size:20px;
+max-width:500px;
 }
 </style>
 </head>
 
 <body>
 
-<!-- SCREEN 1 Greeting -->
-<div class="screen" id="screen1">
-<h1>For Someone Special 💖</h1>
-<button class="primary" onclick="startKiss()">Click Me</button>
+<!-- PAGE 1 -->
+<div class="page" id="page1">
+<h1>Hey Darling ❤️</h1>
+<h2>Happy Valentine's Day ❤️</h2>
+<button onclick="goToPage2()">Click for More Love</button>
 </div>
 
-<!-- SCREEN 2 Kiss -->
-<div class="screen hidden" id="screen2">
-<h2>Here comes a kiss 💋</h2>
+<!-- PAGE 2 -->
+<div class="page hidden" id="page2">
+<h1>Here comes more love your way ❤️</h1>
+
 <div class="kiss">💋</div>
+
+<p style="margin-top:20px;">
+Just wanted to steal a tiny moment of your day... <br>
+and send you the softest kiss ever 💋
+</p>
+
+<button onclick="goToPage3()">See my Valentine's Page</button>
 </div>
 
-<!-- SCREEN 3 Proposal -->
-<div class="screen hidden" id="screen3">
-<div class="blur" id="blur"></div>
+<!-- PAGE 3 -->
+<div class="page hidden" id="page3">
+<h1>I love you Monpu ❤️</h1>
 
-<div class="typewriter">I Love You ❤️</div>
+<img src="orangutan.jpg" alt="Orangutan">
 
-<img src="https://i.imgur.com/6oKXK8R.png">
+<img src="proposal.gif" alt="Proposal">
 
-<img src="https://media.tenor.com/2roX3uxz_68AAAAC/love.gif">
+<button onclick="showFinalMessage()">Message 💌</button>
 
-<h2>Forever? ❤️</h2>
-
-<button class="primary" onclick="yesClicked()">Yes 💍</button>
-<button class="secondary" onclick="alwaysClicked()">Always 💞</button>
-
-<div class="message" id="message"></div>
-
+<div class="message" id="finalMessage"></div>
 </div>
 
-<audio id="music" src="https://www.soundjay.com/human/sounds/kiss-01.mp3"></audio>
-<audio id="heartbeat" src="https://www.soundjay.com/heartbeat/sounds/heartbeat-01.mp3"></audio>
+<!-- AUDIO FILES -->
+<audio id="music" src="music.mp3"></audio>
+<audio id="heartbeat" src="heartbeat.mp3"></audio>
 
 <script>
 
-/* Screen Transition */
-function startKiss(){
-document.getElementById("screen1").classList.add("hidden");
-document.getElementById("screen2").classList.remove("hidden");
+/* Page Transitions */
+function goToPage2(){
+document.getElementById("page1").classList.add("hidden");
+document.getElementById("page2").classList.remove("hidden");
+
 document.getElementById("music").play();
+startFloatingHearts();
+}
 
-createHearts();
-
-setTimeout(()=>{
-document.getElementById("screen2").classList.add("hidden");
-document.getElementById("screen3").classList.remove("hidden");
-},5000);
+function goToPage3(){
+document.getElementById("page2").classList.add("hidden");
+document.getElementById("page3").classList.remove("hidden");
 }
 
 /* Floating Hearts */
-function createHearts(){
+function startFloatingHearts(){
 setInterval(()=>{
 const heart=document.createElement("div");
 heart.classList.add("heart");
-heart.innerHTML="❤️";
+heart.innerHTML=Math.random()>0.5?"❤️":"😘";
 heart.style.left=Math.random()*100+"vw";
 document.body.appendChild(heart);
-setTimeout(()=>heart.remove(),5000);
+setTimeout(()=>heart.remove(),6000);
 },500);
 }
 
+/* Final Message + Effects */
+function showFinalMessage(){
+
+document.getElementById("heartbeat").play();
+
+document.getElementById("finalMessage").innerHTML=
+"You are my today, my tomorrow, and every forever after. ❤️";
+
+startRoses();
+startFireworks();
+}
+
 /* Roses */
+function startRoses(){
 setInterval(()=>{
 const rose=document.createElement("div");
 rose.classList.add("rose");
@@ -234,10 +209,11 @@ rose.style.animationDuration=(3+Math.random()*5)+"s";
 document.body.appendChild(rose);
 setTimeout(()=>rose.remove(),8000);
 },600);
+}
 
 /* Fireworks */
-function fireworks(){
-for(let i=0;i<15;i++){
+function startFireworks(){
+for(let i=0;i<20;i++){
 const fw=document.createElement("div");
 fw.classList.add("firework");
 fw.innerHTML="✨";
@@ -246,24 +222,6 @@ fw.style.top=Math.random()*100+"vh";
 document.body.appendChild(fw);
 setTimeout(()=>fw.remove(),1000);
 }
-}
-
-/* YES */
-function yesClicked(){
-document.getElementById("blur").classList.add("show-blur");
-document.getElementById("heartbeat").play();
-document.getElementById("message").innerHTML=
-"From today, every sunrise feels warmer because you are mine. 💖";
-fireworks();
-}
-
-/* ALWAYS */
-function alwaysClicked(){
-document.getElementById("blur").classList.add("show-blur");
-document.getElementById("heartbeat").play();
-document.getElementById("message").innerHTML=
-"No matter the years, no matter the storms... I choose you. Always. 💞";
-fireworks();
 }
 
 </script>
