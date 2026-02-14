@@ -8,41 +8,46 @@
 body {
     margin: 0;
     height: 100vh;
-    background: radial-gradient(circle at center, #ff758c, #ff7eb3, #ffb199);
-    display: flex;
-    justify-content: center;
-    align-items: center;
     font-family: 'Segoe UI', sans-serif;
     text-align: center;
     overflow: hidden;
-    transition: filter 1s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-/* Blur effect for proposal scene */
-.blur-bg {
-    filter: blur(8px);
+/* Background Layer */
+.background {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle at center, #ff758c, #ff7eb3, #ffb199);
+    z-index: -2;
+    transition: filter 1.5s ease;
+}
+
+/* Blur only background */
+.blur .background {
+    filter: blur(12px) brightness(0.8);
 }
 
 .container {
     display: none;
-    animation: fadeIn 1.5s ease-in-out;
-    z-index: 2;
-    position: relative;
+    animation: fadeIn 1.5s ease;
+}
+
+h1, h2, p {
+    color: white;
 }
 
 button {
-    padding: 15px 30px;
-    font-size: 18px;
+    padding: 12px 28px;
+    font-size: 16px;
     border: none;
     border-radius: 30px;
     background: white;
     color: #ff4b6e;
     cursor: pointer;
-    margin-top: 20px;
-}
-
-h1, p {
-    color: white;
+    margin: 10px;
 }
 
 @keyframes fadeIn {
@@ -50,19 +55,19 @@ h1, p {
     to { opacity: 1; }
 }
 
-/* Kiss */
+/* Kiss Animation */
 .lip {
     font-size: 100px;
-    animation: kiss 1.2s infinite;
+    animation: pulse 1.2s infinite;
 }
 
-@keyframes kiss {
+@keyframes pulse {
     0% { transform: scale(1); }
     50% { transform: scale(1.4); }
     100% { transform: scale(1); }
 }
 
-/* Floating hearts */
+/* Floating Hearts */
 .heart {
     position: absolute;
     font-size: 22px;
@@ -75,7 +80,7 @@ h1, p {
     100% { transform: translateY(-10vh); opacity: 0; }
 }
 
-/* Falling roses */
+/* Falling Roses */
 .rose {
     position: absolute;
     font-size: 26px;
@@ -102,7 +107,7 @@ h1, p {
 }
 
 @keyframes blink {
-    50% { border-color: transparent }
+    50% { border-color: transparent; }
 }
 
 /* Fireworks */
@@ -122,10 +127,12 @@ h1, p {
 
 <body>
 
+<div class="background"></div>
+
 <!-- SCREEN 1 -->
 <div class="container" id="screen1" style="display:block;">
-    <h1>Happy Valentine’s Day ❤️</h1>
-    <button onclick="showKiss()">Click for a Surprise 💌</button>
+    <h1>Hey darling ❤️Happy Valentine’s Day ❤️</h1>
+    <button onclick="startExperience()">Click for a Surprise 💌</button>
 </div>
 
 <!-- SCREEN 2 -->
@@ -142,11 +149,11 @@ h1, p {
     <img src="proposal.gif" width="250"><br><br>
 
     <h2>Forever? ❤️</h2>
-    <button onclick="foreverYes()">Yes 💍</button>
-    <button onclick="foreverYes()">Always 💖</button>
+    <button onclick="forever()">Yes 💍</button>
+    <button onclick="forever()">Always 💖</button>
 </div>
 
-<audio id="bgMusic" loop>
+<audio id="music" loop>
     <source src="music.mp3" type="audio/mpeg">
 </audio>
 
@@ -156,10 +163,10 @@ h1, p {
 
 <script>
 
-let music = document.getElementById("bgMusic");
-let heartbeat = document.getElementById("heartbeat");
+const music = document.getElementById("music");
+const heartbeat = document.getElementById("heartbeat");
 
-function showKiss() {
+function startExperience() {
 
     document.getElementById("screen1").style.display = "none";
     document.getElementById("screen2").style.display = "block";
@@ -167,51 +174,51 @@ function showKiss() {
     music.play().catch(()=>{});
     heartbeat.play().catch(()=>{});
 
-    // Floating hearts
+    /* Floating Hearts */
     setInterval(()=>{
         const heart = document.createElement("div");
-        heart.className="heart";
-        heart.innerHTML="❤️";
-        heart.style.left=Math.random()*100+"vw";
+        heart.className = "heart";
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random()*100+"vw";
         document.body.appendChild(heart);
         setTimeout(()=>heart.remove(),4000);
     },400);
 
-    // Move to proposal after 5 sec
+    /* Move to Proposal after 5 sec */
     setTimeout(()=>{
-        document.body.classList.add("blur-bg");
-        document.getElementById("screen2").style.display="none";
-        document.getElementById("screen3").style.display="block";
+        document.body.classList.add("blur");
+        document.getElementById("screen2").style.display = "none";
+        document.getElementById("screen3").style.display = "block";
         fallingRoses();
     },5000);
 }
 
 function fallingRoses(){
     setInterval(()=>{
-        const rose=document.createElement("div");
-        rose.className="rose";
-        rose.innerHTML="🌹";
-        rose.style.left=Math.random()*100+"vw";
+        const rose = document.createElement("div");
+        rose.className = "rose";
+        rose.innerHTML = "🌹";
+        rose.style.left = Math.random()*100+"vw";
         document.body.appendChild(rose);
         setTimeout(()=>rose.remove(),6000);
     },500);
 }
 
-function foreverYes(){
+function forever(){
     fireworks();
 }
 
 function fireworks(){
     for(let i=0;i<25;i++){
         setTimeout(()=>{
-            const fw=document.createElement("div");
-            fw.className="firework";
-            fw.innerHTML="✨";
-            fw.style.left=Math.random()*100+"vw";
-            fw.style.top=Math.random()*100+"vh";
+            const fw = document.createElement("div");
+            fw.className = "firework";
+            fw.innerHTML = "✨";
+            fw.style.left = Math.random()*100+"vw";
+            fw.style.top = Math.random()*100+"vh";
             document.body.appendChild(fw);
             setTimeout(()=>fw.remove(),1000);
-        },i*150);
+        },i*120);
     }
 }
 
