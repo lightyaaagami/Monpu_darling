@@ -23,7 +23,6 @@ align-items:center;
 text-align:center;
 }
 
-/* Pages - Slightly Wider */
 .page{
 position:absolute;
 width:90%;
@@ -42,7 +41,6 @@ opacity:0;
 pointer-events:none;
 }
 
-/* Buttons */
 button{
 padding:12px 28px;
 margin-top:20px;
@@ -59,7 +57,6 @@ button:hover{
 transform:scale(1.1);
 }
 
-/* Kiss animation */
 .kiss{
 font-size:80px;
 animation:pulse 1s infinite alternate;
@@ -70,7 +67,6 @@ from{transform:scale(1);}
 to{transform:scale(1.2);}
 }
 
-/* Bigger Floating hearts */
 .heart{
 position:absolute;
 font-size:40px;
@@ -82,7 +78,6 @@ from{transform:translateY(100vh);}
 to{transform:translateY(-10vh);}
 }
 
-/* Fireworks */
 .firework{
 position:absolute;
 font-size:45px;
@@ -110,40 +105,30 @@ max-width:500px;
 
 <body>
 
-<!-- PAGE 1 -->
 <div class="page" id="page1">
 <h1>Helloji Hello, Darling ❤️</h1>
 <h2>Happy Valentine's Day ❤️</h2>
 <button onclick="goToPage2()">Click to see Apne Non Medico Bande ka Pyar😎</button>
 </div>
 
-<!-- PAGE 2 -->
 <div class="page hidden" id="page2">
 <h1>Here comes more love your way ❤️</h1>
-
 <div class="kiss">💋</div>
-
 <p style="margin-top:20px;">
 Just wanted to steal a tiny moment of your BUSY day... <br>
 and send you the softest kiss ever 💋
 </p>
-
 <button onclick="goToPage3()">See my Valentine's Page</button>
 </div>
 
-<!-- PAGE 3 -->
 <div class="page hidden" id="page3">
 <h1>I love youuu Lal Bhaalu ❤️</h1>
-
 <img src="Orangutan.png" alt="Orangutan">
 <img src="proposal.gif" alt="Proposal">
-
 <button onclick="showFinalMessage()">Message 💌</button>
-
 <div class="message" id="finalMessage"></div>
 </div>
 
-<!-- AUDIO FILES -->
 <audio id="music" src="music.mp3"></audio>
 <audio id="heartbeat" src="heartbeat.mp3"></audio>
 
@@ -152,22 +137,27 @@ and send you the softest kiss ever 💋
 let music = document.getElementById("music");
 let heartbeat = document.getElementById("heartbeat");
 
-/* Page 1 → Page 2 */
+function safePlay(audio){
+let playPromise = audio.play();
+if (playPromise !== undefined) {
+playPromise.catch(error => {});
+}
+}
+
 function goToPage2(){
 document.getElementById("page1").classList.add("hidden");
 document.getElementById("page2").classList.remove("hidden");
 
 music.loop = true;
-music.play();
+safePlay(music);
 
 startFloatingHearts();
 }
 
-/* Page 2 → Page 3 */
 function goToPage3(){
 
 heartbeat.currentTime = 0;
-heartbeat.play();
+safePlay(heartbeat);
 
 setTimeout(()=>{
 heartbeat.pause();
@@ -179,7 +169,6 @@ document.getElementById("page3").classList.remove("hidden");
 },2000);
 }
 
-/* Floating hearts Page 2 */
 function startFloatingHearts(){
 setInterval(()=>{
 const heart=document.createElement("div");
@@ -192,25 +181,23 @@ setTimeout(()=>heart.remove(),6000);
 },400);
 }
 
-/* Message Button */
 function showFinalMessage(){
 
 document.getElementById("finalMessage").innerHTML=`
-        From the moment you came into my life,
-        everything became brighter and warmer ❤️
-        I love you more than words can ever express. Thank you For standing by my side.
-        You are my today, my tomorrow, and every forever after. ❤️`;
+From the moment you came into my life,
+everything became brighter and warmer ❤️
+I love you more than words can ever express.
+Thank you for standing by my side.
+You are my today, my tomorrow, and every forever after. ❤️`;
 
-/* Heartbeat once */
 heartbeat.currentTime = 0;
-heartbeat.play();
+safePlay(heartbeat);
 
 setTimeout(()=>{
 heartbeat.pause();
 heartbeat.currentTime = 0;
 },1000);
 
-/* Bigger intense floating hearts */
 setInterval(()=>{
 const heart=document.createElement("div");
 heart.classList.add("heart");
@@ -224,7 +211,6 @@ setTimeout(()=>heart.remove(),5000);
 startFireworks();
 }
 
-/* Multi-color Fireworks */
 function startFireworks(){
 
 const colors = ["✨","💖","💥","❤️","🌟","🔥"];
