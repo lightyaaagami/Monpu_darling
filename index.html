@@ -160,21 +160,38 @@ and send you the softest kiss ever 💋
 
 <script>
 
-/* Page Transitions */
+let music = document.getElementById("music");
+let heartbeat = document.getElementById("heartbeat");
+
+/* Page 1 → Page 2 */
 function goToPage2(){
 document.getElementById("page1").classList.add("hidden");
 document.getElementById("page2").classList.remove("hidden");
 
-document.getElementById("music").play();
+music.loop = true;
+music.play();
+
 startFloatingHearts();
 }
 
+/* Page 2 → Page 3 */
 function goToPage3(){
+
+// Play heartbeat for 2 seconds
+heartbeat.currentTime = 0;
+heartbeat.play();
+
+setTimeout(()=>{
+heartbeat.pause();
+heartbeat.currentTime = 0;
+
 document.getElementById("page2").classList.add("hidden");
 document.getElementById("page3").classList.remove("hidden");
+
+},2000);
 }
 
-/* Floating Hearts */
+/* Small floating hearts (Page 2) */
 function startFloatingHearts(){
 setInterval(()=>{
 const heart=document.createElement("div");
@@ -186,34 +203,29 @@ setTimeout(()=>heart.remove(),6000);
 },500);
 }
 
-/* Final Message + Effects */
+/* Message Button Effects */
 function showFinalMessage(){
-
-document.getElementById("heartbeat").play();
 
 document.getElementById("finalMessage").innerHTML=
 "You are my today, my tomorrow, and every forever after. ❤️";
 
-startRoses();
-startFireworks();
-}
-
-/* Roses */
-function startRoses(){
+/* BIG Floating Hearts */
 setInterval(()=>{
-const rose=document.createElement("div");
-rose.classList.add("rose");
-rose.innerHTML="🌹";
-rose.style.left=Math.random()*100+"vw";
-rose.style.animationDuration=(3+Math.random()*5)+"s";
-document.body.appendChild(rose);
-setTimeout(()=>rose.remove(),8000);
-},600);
+const heart=document.createElement("div");
+heart.classList.add("heart");
+heart.innerHTML="❤️";
+heart.style.fontSize="50px";
+heart.style.left=Math.random()*100+"vw";
+document.body.appendChild(heart);
+setTimeout(()=>heart.remove(),5000);
+},400);
+
+startFireworks();
 }
 
 /* Fireworks */
 function startFireworks(){
-for(let i=0;i<20;i++){
+for(let i=0;i<25;i++){
 const fw=document.createElement("div");
 fw.classList.add("firework");
 fw.innerHTML="✨";
@@ -226,5 +238,7 @@ setTimeout(()=>fw.remove(),1000);
 
 </script>
 
+
 </body>
 </html>
+
